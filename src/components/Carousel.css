@@ -1,0 +1,97 @@
+.carousel{
+    width: 100%;
+    transition: left 1s, transform 1s;
+	white-space: nowrap;
+}
+
+.carousel img {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-height: 50vh;
+    margin: auto;
+    overflow: auto;
+    object-fit: cover;
+    z-index: 0;
+}
+
+.carousel .carousel-left {
+    position: absolute;
+    top: 40%;
+    left: 10px;
+    color: #FFFFFF;
+    font-size: 40px;
+    z-index: 10;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.carousel .carousel-left:hover {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+  
+.carousel .carousel-right {
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    color: #FFFFFF;
+    font-size: 40px;
+    z-index: 10;
+    font-weight: bold;
+    transition: 0.3s;
+  } 
+
+.carousel .carousel-right:hover {
+    color: #bbb;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.right-enter {
+    transform: translateX(100%);
+    z-index: 0;
+}
+  
+.right-enter.right-enter-active {
+    transform: translate(0%);
+    transition: transform 1000ms ease-in-out;
+    z-index: 0;
+}
+
+.right-leave {
+    left: -100%;
+    transform: translateX(-100%);
+}
+
+.right-leave.right-leave-active {
+    left: -100%;
+    transition: left 1000ms ease-in-out;
+    transform: translateX(-100%);
+}
+
+.left-enter {
+    transform: translateX(-100%);
+    z-index: 0;
+}
+  
+.left-enter.left-enter-active {
+    transform: translate(0%);
+    transition: transform 1000ms ease-in-out;
+    z-index: 0;
+}
+
+.left-leave {
+    left: 100%;
+    transform: translateX(-100%);
+}
+
+.left-leave.left-leave-active {
+    left: 100%;
+    transition: left 1000ms ease-in-out;
+    transform: translateX(-100%);
+}
