@@ -9,7 +9,6 @@ const useCarousel = () => {
             .firestore()
             .collection('carousel')
             .onSnapshot((snapshot) => {
-                console.log(snapshot)
                 const imagesData = snapshot.docs.map(doc => ({
                     id: doc.id,
                     ...doc.data()

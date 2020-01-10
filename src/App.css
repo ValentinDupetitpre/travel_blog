@@ -1,9 +1,10 @@
-.App {
+.app {
   text-align: center;
-  background-color: #f9fef8; 
+  /* background-color: #f9fef8;  */
+  min-height: 100vh;
 }
 
-.App-header {
+.app-header {
   display: flex;
   flex-direction: row;
   align-items: baseline;
@@ -11,5 +12,6 @@
   font-size: calc(25px + 2vmin);
   color: rgb(214, 8, 8);
   padding: 65px 0 20px 0;
+  cursor: pointer;
 }
 

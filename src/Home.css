@@ -1,0 +1,32 @@
+.home {
+  text-align: center;
+}
+
+.home .presentation{
+  background-color: #F4F5F5;
+  margin-block-start: -3px;
+  padding: 10px 0 20px 0;
+}
+
+.home .presentation h3{
+  font-size: 40px;
+  text-transform: uppercase;
+}
+
+.home .presentation hr{
+  width: 17%;
+  height: 3px;
+  border: none;
+  background-color: black;
+  margin: -25px auto 40px auto;
+}
+
+.home .presentation .text{
+  display: flex;
+  margin: auto;
+  justify-content: space-evenly;
+}
+
+.home .presentation p{
+  width: 30%;
+}

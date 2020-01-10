@@ -1,18 +1,21 @@
 import React, {useState, useEffect} from 'react'
-import firebase from '../config/firebase'
-import useArticle from '../services/articles'
+import articleService from '../services/articles'
 import Card from './Card'
 import './Preview.css'
 
-const Preview = () => {
-    const article = useArticle()
+const Preview = (props) => {
+    const articles = articleService.useArticles()
 
     return(
-        <div className="preview-wrapper">
-            {article.map(preview => 
-                <Card key={preview.id} title={preview.title} content={preview.content} picture={preview.picture} />
-            )
-            }
+        <div className="preview">
+            <h4>Nos articles</h4>
+            <hr />
+            <div className="preview-wrapper">
+                {articles.map(preview => 
+                    <Card key={preview.id} id={preview.id} title={preview.title} content={preview.content} picture={preview.mainPicture}/>
+                )
+                }
+            </div>
         </div>
     )
 }

@@ -1,8 +1,8 @@
 import {useState, useEffect} from 'react'
 import firebase from '../config/firebase'
 
-const useArticle = () => {
-    const [articlePreview, setArticlePreview] = useState([])
+const useArticles = () => {
+    const [articlesPreview, setArticlesPreview] = useState([])
 
     useEffect(() => {
         const connection = firebase
@@ -10,16 +10,39 @@ const useArticle = () => {
             .collection('articles')
             .orderBy("created", "desc")
             .onSnapshot((snapshot) => {
-                const article = snapshot.docs.map(doc => ({
+                const articles = snapshot.docs.map(doc => ({
                     id: doc.id,
-                    ...doc.data()
+                    created: doc.data().created,
+                    title: doc.data().title,
+                    content: doc.data().content,
+                    mainPicture: doc.data().mainPicture
                 }))
-                setArticlePreview(article)
+                setArticlesPreview(articles)
             })
         return () => connection()
     }, [])
 
-    return articlePreview
+    return articlesPreview
 }
 
-export default useArticle
+const useArticle = (id) => {
+    const [article, setArticle] = useState({})
+
+    useEffect(() => {
+        const connection = firebase
+            .firestore()
+            .collection('articles')
+            .doc(id)
+            .onSnapshot((snapshot) => {
+                setArticle({
+                    id: snapshot.id,
+                    ...snapshot.data()
+                })
+            })
+        return () => connection()
+    }, [id])
+    
+    return article
+}
+
+export default {useArticles, useArticle}

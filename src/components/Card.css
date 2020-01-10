@@ -38,13 +38,12 @@
 
 .card-wrapper .text-preview p{
     position: relative;
-    height: 55px;
     margin: 10px;
     color: #353535;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     margin-top: 15px;
 }

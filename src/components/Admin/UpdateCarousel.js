@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import firebase from '../../config/firebase'
 import useCarousel from '../../services/carousel'
 
@@ -51,7 +51,7 @@ const UpdateCarousel = () => {
 
     return (
         <div>
-            <h2>Sélectionner une photo à supprimer</h2>
+            <h2>Sélectionner une photo à supprimer du carousel</h2>
             <select name={name} onChange={handleImageSelection}>
                 {images.map(image => 
                     <option value={image.name} key={image.id}>{image.name}</option>

@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import firebase from '../../config/firebase'
-import useArticle from '../../services/articles'
+import articleService from '../../services/articles'
 
 const UpdateArticle = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [id, setId] = useState(null)
-    const articles = useArticle()
+    const articles = articleService.useArticles()
 
     const resetFields = () => {
         setTitle('')

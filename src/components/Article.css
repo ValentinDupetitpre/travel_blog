@@ -1,0 +1,21 @@
+.article-wrapper{
+    margin-top: 5px;
+}
+
+.article-wrapper .article-pics{
+    width: 90%;
+    margin: auto;
+}
+
+.article-wrapper .article-pics img{
+    width: 33%;
+    object-fit: cover;
+    height: 40vh;
+}
+
+.article-wrapper .article-text{
+    margin: 5rem 5rem;
+    width: 60%;
+    text-align: justify;
+    white-space: pre-line;
+}

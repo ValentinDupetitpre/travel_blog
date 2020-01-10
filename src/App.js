@@ -1,28 +1,28 @@
 import React from 'react'
-import firebase from './config/firebase'
-import logo from './logo.svg'
+import { Switch, Route, withRouter } from 'react-router-dom'
 import './App.css'
-import Preview from './components/Preview'
-import CreateArticle from './components/Admin/CreateArticle'
-import UpdateArticle from './components/Admin/UpdateArticle'
-import Carousel from './components/Carousel'
-import AddCarousel from './components/Admin/AddCarousel';
-import UpdateCarousel from './components/Admin/UpdateCarousel';
+import Home from './Home'
+import Article from './components/Article'
+import Admin from './components/Admin/Admin'
 
-const App = () => {
+const App = (props) => {
+
+  const goToHome = () => {
+    props.history.push('/')
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        Blog de voyage en NZ des deux chatons !
+    <div className="app">
+      <header className="app-header" onClick={goToHome}>
+          Blog de voyage en NZ  !
       </header>
-      <Carousel />
-        <Preview />
-        <AddCarousel />
-        <UpdateCarousel />
-         <CreateArticle />
-        <UpdateArticle />
+      <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/article/:articleId" render={(props) => <Article {...props} />} />
+          <Route exact path="/admin" component={Admin} />
+      </Switch>
     </div>
   )
 }
 
-export default App
+export default withRouter(App)
