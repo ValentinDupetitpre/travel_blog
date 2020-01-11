@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import firebase from '../../config/firebase'
+import {storage} from '../../config/firebase'
 
 const AddCarousel = () => {
     const [name, setName] = useState('')
@@ -12,39 +12,31 @@ const AddCarousel = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
-
-        firebase
-            .firestore()
-            .collection('carousel')
-            .add({
-                name,
-                picture,
-                created: new Date()
-            })
-            .then(() => {
+        const uploadTask = storage.ref(`carousel/${name}`).put(picture)
+        uploadTask.on(
+            'state_changed',
+            snapshot => {
+                console.log(snapshot)
+            },
+            error => {
+                console.log(error)
+            },
+            () => {
                 resetFields()
-            })
+            }
+        )
 
     }
 
     const onFileChange = (e, fileInput) => {
-        let file = fileInput || e.target.files[0],
-            pattern = /image-*/,
-            reader = new FileReader();
+        const file = fileInput || e.target.files[0]
+        const pattern = /image-*/
           
         if (!file.type.match(pattern)) {
             alert('Format invalide');
             return;
         }
-      
-        // setLoaded(false)
-      
-        reader.onload = (e) => {
-            console.log(e.target.result)
-            setPicture(e.target.result)
-            // setLoaded(true)
-        }
-        reader.readAsDataURL(file);
+        setPicture(file)
     }
 
     return (

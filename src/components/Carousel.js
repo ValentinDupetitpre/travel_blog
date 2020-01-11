@@ -4,13 +4,28 @@ import './Carousel.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
 const Carousel = () => {
-    const images = useCarousel()
-    const [selectedImg, setSelectedImg] = useState({})
+    const imagesRef = useCarousel()
+    const [images, setImages] = useState([])
+    const [selectedImg, setSelectedImg] = useState(null)
     const [imgComesFrom, setImgComesFrom] = useState('left')
 
     useEffect(() => {
-        setSelectedImg(images[0]) 
-    }, [images])
+        console.log(imagesRef)
+        const urls = []
+        let index = 0
+        imagesRef.map(image => image.getDownloadURL().then(url => {
+            const img = {
+                id: index,
+                url
+            }
+            urls.push(img)
+            if(index === 0){
+                setSelectedImg(img)
+            }
+            index++
+        }))
+        setImages(urls)
+    }, [imagesRef])
 
     const goRight = () => {
         setImgComesFrom('right')
@@ -40,7 +55,7 @@ const Carousel = () => {
                 transitionEnterTimeout={1000}
                 transitionLeaveTimeout={1000}>
 
-                <img key={selectedImg? selectedImg.id : null} src={selectedImg ? selectedImg.picture : null}/>
+                <img key={selectedImg ? selectedImg.id : null} src={selectedImg ? selectedImg.url : 'https://via.placeholder.com/350x150'} alt={'carousel'}/>
             </ReactCSSTransitionGroup>
            
         </section>

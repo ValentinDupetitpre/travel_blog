@@ -1,7 +1,8 @@
 .carousel{
     width: 100%;
     transition: left 1s, transform 1s;
-	white-space: nowrap;
+    white-space: nowrap;
+    position: relative;
 }
 
 .carousel img {

@@ -14,7 +14,8 @@ const App = (props) => {
   return (
     <div className="app">
       <header className="app-header" onClick={goToHome}>
-          Blog de voyage en NZ  !
+          <img src="https://firebasestorage.googleapis.com/v0/b/travel-blog-f8f0d.appspot.com/o/home%2Flogo.png?alt=media&token=059fd9fc-16e5-43a6-9a55-8dd3841e645d" alt='logo'/>
+          <h1>De l'ouest aux antipodes</h1>
       </header>
       <Switch>
           <Route exact path="/" component={Home} />
