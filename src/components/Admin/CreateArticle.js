@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 import FileUploader from '../FileUploader'
 
-import firebase from '../../config/firebase'
+import firebase, { storage } from '../../config/firebase'
 
 const CreateArticle = () => {
     const [title, setTitle] = useState('')
@@ -14,6 +14,48 @@ const CreateArticle = () => {
     const [leftPicture, setLeftPicture] = useState('')
     const [rightPicture, setRightPicture] = useState('')
     const [newBlob, setNewBlob] = useState(null)
+
+    const uploadImages = (ref) => {
+        const uploadMainPic = storage.ref(`article/${ref.id}/main`).put(mainPicture, {name:'main'})
+        const uploadLeftPic = storage.ref(`article/${ref.id}/left`).put(leftPicture, {name:'left'})
+        const uploadRightPic = storage.ref(`article/${ref.id}/right`).put(rightPicture, {name:'right'})
+        uploadMainPic.on(
+            'state_changed',
+            snapshot => {
+                console.log(snapshot)
+            },
+            error => {
+                console.log(error)
+            },
+            () => {
+                setMainPicture('')
+            }
+        )
+        uploadLeftPic.on(
+            'state_changed',
+            snapshot => {
+                console.log(snapshot)
+            },
+            error => {
+                console.log(error)
+            },
+            () => {
+                setLeftPicture('')
+            }
+        )
+        uploadRightPic.on(
+            'state_changed',
+            snapshot => {
+                console.log(snapshot)
+            },
+            error => {
+                console.log(error)
+            },
+            () => {
+                setRightPicture('')
+            }
+        )
+    }
 
     const resetFields = () => {
         document.getElementById("article-form-create").reset()
@@ -34,12 +76,10 @@ const CreateArticle = () => {
             .add({
                 title: data.get('title'),
                 content: data.get('content'),
-                mainPicture,
-                leftPicture,
-                rightPicture,
                 created: new Date()
             })
-            .then(() => {
+            .then(docRef => {
+                uploadImages(docRef)
                 resetFields()
             })
 
@@ -61,22 +101,6 @@ const CreateArticle = () => {
         }
         
     }
-
-    // const onFileChange = (e, fileInput) => {
-    //     const file = fileInput || e.target.files[0],
-    //         pattern = /image-*/,
-    //         reader = new FileReader();
-    //     if (!file.type.match(pattern)) {
-    //         alert('Format invalide');
-    //         return;
-    //     }
-      
-    //     reader.onload = (e) => {
-    //         console.log(e.target.result)
-    //         setPicture(e.target.result)
-    //     }
-    //     reader.readAsDataURL(file);
-    // }
 
     return (
         <form id="article-form-create" onSubmit={onSubmit} noValidate autoComplete="off">
@@ -109,22 +133,6 @@ const CreateArticle = () => {
                 Envoyer 
             </Button>
         </form>
-        // <form onSubmit={onSubmit}>
-        //     <h2>Créer un article</h2>
-        //     <div>
-        //         <label>Ajouter un titre</label>
-        //         <input type='text' value={title} onChange={e => setTitle(e.currentTarget.value)} />
-        //     </div>
-        //     <div>
-        //         <label>Ajouter un contenu</label>
-        //         <input type='text' value={content} onChange={e => setContent(e.currentTarget.value)}/>
-        //     </div>
-        //     <div>
-        //         <label>Ajouter une photo</label>
-        //         <input type='file' accept="image/*" onChange={onFileChange}/>
-        //     </div>
-        //     <button>Créer</button>
-        // </form>
     )
 }
 

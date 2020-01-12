@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import firebase from '../config/firebase'
+import firebase, {storage} from '../config/firebase'
 
 const useArticles = () => {
     const [articlesPreview, setArticlesPreview] = useState([])
@@ -14,8 +14,7 @@ const useArticles = () => {
                     id: doc.id,
                     created: doc.data().created,
                     title: doc.data().title,
-                    content: doc.data().content,
-                    mainPicture: doc.data().mainPicture
+                    content: doc.data().content
                 }))
                 setArticlesPreview(articles)
             })
@@ -45,4 +44,26 @@ const useArticle = (id) => {
     return article
 }
 
-export default {useArticles, useArticle}
+const useMainPicture = (ref) => {
+    const [picture, setPicture] = useState({})
+
+    useEffect(() => {
+        const picRef = storage.ref().child(`article/${ref}/main`)
+        picRef.getDownloadURL().then(url => setPicture(url))
+    }, [])
+
+    return picture
+}
+
+const useTopPicture = (ref, position) => {
+    const [picture, setPicture] = useState({})
+
+    useEffect(() => {
+        const picRef = storage.ref().child(`article/${ref}/${position}`)
+        picRef.getDownloadURL().then(url => setPicture(url))
+    }, [])
+
+    return picture
+}
+
+export default {useArticles, useArticle, useMainPicture, useTopPicture}

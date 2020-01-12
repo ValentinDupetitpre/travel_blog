@@ -10,7 +10,6 @@ const Carousel = () => {
     const [imgComesFrom, setImgComesFrom] = useState('left')
 
     useEffect(() => {
-        console.log(imagesRef)
         const urls = []
         let index = 0
         imagesRef.map(image => image.getDownloadURL().then(url => {
@@ -55,7 +54,7 @@ const Carousel = () => {
                 transitionEnterTimeout={1000}
                 transitionLeaveTimeout={1000}>
 
-                <img key={selectedImg ? selectedImg.id : null} src={selectedImg ? selectedImg.url : 'https://via.placeholder.com/350x150'} alt={'carousel'}/>
+                <img key={selectedImg ? selectedImg.id : null} src={selectedImg ? selectedImg.url : 'https://via.placeholder.com/468x120?text=Chargement+de+la+bannière'} alt={'carousel'}/>
             </ReactCSSTransitionGroup>
            
         </section>

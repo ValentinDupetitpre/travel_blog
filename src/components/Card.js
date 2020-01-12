@@ -1,8 +1,10 @@
 import React from 'react'
 import {withRouter} from 'react-router-dom'
+import articleService from '../services/articles'
 import './Card.css'
 
 const Card = (props) => {
+  const picture = articleService.useTopPicture(props.id, 'main')
 
   const goToArticle = () => { 
     props.history.push('/article/'+props.id)
@@ -11,7 +13,7 @@ const Card = (props) => {
   return (
     <div className="card-wrapper" onClick={goToArticle}>
       <div className="image-preview">
-        <img src={props.picture ? props.picture : undefined} alt={undefined}/>
+        <img src={picture ? picture : undefined} alt={undefined}/>
       </div>
       <div className="text-preview">
         <h2>{props.title}</h2>

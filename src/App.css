@@ -9,7 +9,7 @@
   align-items: center;
   justify-content: space-evenly;
   font-size: calc(25px + 2vmin);
-  color: rgb(214, 8, 8);
+  color: #EEA834;
   padding: 10px 0 10px 0; 
   /* cursor: pointer;*/
 }
@@ -18,6 +18,8 @@
   font-size: calc(25px + 2vmin);
   width: 30%;
   font-style: italic;
+  border: solid #EEA834;
+  padding: 30px;
 }
 
 .app-header img{

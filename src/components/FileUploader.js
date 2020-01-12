@@ -48,14 +48,15 @@ function FileUploader(props) {
             alert('Format invalide');
             return;
         }
+        setImageSrc(file)
       
-        setLoaded(false)
+        setLoaded(true)
       
-        reader.onload = (e) => {
-            setImageSrc(e.target.result)
-            setLoaded(true)
-        }
-        reader.readAsDataURL(file);
+        // reader.onload = (e) => {
+        //     setImageSrc(e.target.result)
+        //     setLoaded(true)
+        // }
+        // reader.readAsDataURL(file);
 
     }
 
