@@ -14,8 +14,46 @@
 }
 
 .article-wrapper .article-text{
-    margin: 5rem 5rem;
-    width: 60%;
+    /* margin: 5rem 5rem; */
+    padding: 5rem 5rem;
+    /* width: 60%; */
     text-align: justify;
     white-space: pre-line;
+    content: "";
+    clear: both;
+    display: table;
+}
+.article-wrapper .article-text .text{
+    width: 60%;
+    float: left;
+}
+
+.article-wrapper .article-text .side{
+    width: 35%;
+    margin-top: 4.5rem;
+    float: right;
+    position: sticky;
+    top: 30px;
+}
+
+@media only screen and (max-device-width: 600px) {
+    .article-wrapper .article-pics{
+        width: 100%;
+    }
+    .article-wrapper .article-pics img{
+        height: 25vh;
+    }
+
+    .article-wrapper .article-text{
+        padding: 15px;
+    }
+    .article-wrapper .article-text .text{
+        width: 95%;
+    }
+
+    .article-wrapper .article-text .side{
+        width: 95%;
+        float: none;
+        margin-top: 5px;
+    }
 }

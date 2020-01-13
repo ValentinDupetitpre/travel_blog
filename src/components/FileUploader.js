@@ -41,8 +41,8 @@ function FileUploader(props) {
   
     function onFileChange(e, fileInput) {
         let file = fileInput || e.target.files[0],
-            pattern = /image-*/,
-            reader = new FileReader();
+            pattern = /image-*/;
+            // reader = new FileReader();
           
         if (!file.type.match(pattern)) {
             alert('Format invalide');
@@ -68,11 +68,11 @@ function FileUploader(props) {
                 props.overlayColor : props.baseColor;
         setBorderColor(border)
         setIconColor(icon)
-    })
+    }, [loaded, active, props.activeColor, props.baseColor, props.overlayColor])
 
     useEffect(()=> {
         props.parentGetImg(imageSrc, props.position)
-    }, [imageSrc])
+    }, [props, imageSrc])
 
     useEffect(()=>{
         if(props.parentGiveImg && props.parentGiveImg.length > 0){

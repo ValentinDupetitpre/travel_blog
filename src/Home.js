@@ -3,8 +3,6 @@ import './Home.css'
 import Preview from './components/Preview'
 import Carousel from './components/Carousel'
 
-import Admin from './components/Admin/Admin'
-
 const Home = () => {
   return (
     <div className="home">

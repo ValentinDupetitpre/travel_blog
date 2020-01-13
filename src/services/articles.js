@@ -50,7 +50,7 @@ const useMainPicture = (ref) => {
     useEffect(() => {
         const picRef = storage.ref().child(`article/${ref}/main`)
         picRef.getDownloadURL().then(url => setPicture(url))
-    }, [])
+    }, [ref])
 
     return picture
 }
@@ -61,7 +61,7 @@ const useTopPicture = (ref, position) => {
     useEffect(() => {
         const picRef = storage.ref().child(`article/${ref}/${position}`)
         picRef.getDownloadURL().then(url => setPicture(url))
-    }, [])
+    }, [ref, position])
 
     return picture
 }

@@ -1,4 +1,21 @@
 #article-form-create{
     display: flex;
     flex-wrap: wrap;
+    width: 80%;
+    margin: auto;
+    justify-content: space-evenly;
+
+}
+
+#article-form-create Button{
+    width: 60%;
+    margin-top: 20px;
+}
+
+#article-form-update{
+    display: flex;
+    flex-wrap: wrap;
+    width: 80%;
+    margin: auto;
+    justify-content: center;
 }

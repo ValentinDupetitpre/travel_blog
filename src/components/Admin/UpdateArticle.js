@@ -2,6 +2,9 @@ import React, {useState} from 'react'
 import firebase from '../../config/firebase'
 import articleService from '../../services/articles'
 
+import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
+ 
 const UpdateArticle = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
@@ -22,14 +25,15 @@ const UpdateArticle = () => {
 
     const onSubmit = (e) => {
         e.preventDefault()
+        const data = new FormData(e.target)
 
         firebase
             .firestore()
             .collection('articles')
             .doc(id)
             .update({
-                title,
-                content,
+                title: data.get('title'),
+                content: data.get('content'),
             })
             .then(() => {
                 resetFields()
@@ -45,16 +49,29 @@ const UpdateArticle = () => {
                     <option value={article.title} key={article.id}>{article.title}</option>
                 )}
             </select>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label>Ajouter un titre</label>
-                    <input type='text' value={title} onChange={e => setTitle(e.currentTarget.value)} />
-                </div>
-                <div>
-                    <label>Ajouter un contenu</label>
-                    <input type='text' value={content} onChange={e => setContent(e.currentTarget.value)}/>
-                </div>
-                <button>Modifier</button>
+            <form id="article-form-update" onSubmit={onSubmit} noValidate autoComplete="off" key={id || null}>
+                <TextField 
+                    className="input"
+                    id="standard-required-title-update"
+                    label="Titre"
+                    defaultValue={title || ''}
+                    margin="normal"
+                    name="title"
+                    fullWidth
+                />
+                <TextField 
+                    className="input"
+                    id="standard-required-content-update"
+                    label="Détail"
+                    defaultValue={content || ''}
+                    margin="normal"
+                    multiline={true}
+                    name="content"
+                    fullWidth
+                />
+                 <Button className="send" type="submit" variant="contained" color="default" >
+                    Modifier 
+                </Button>
             </form>
         </div>
     )

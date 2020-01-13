@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useEffect} from 'react'
 
 import './Article.css'
 import articleService from '../services/articles'
@@ -9,17 +9,25 @@ const Article = (props) => {
     const mainPic = articleService.useTopPicture(id, 'main')
     const leftPic = articleService.useTopPicture(id, 'left')
     const rightPic = articleService.useTopPicture(id, 'right')
+    const sidePic = articleService.useTopPicture(id, 'side')
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
     return (
         <div className="article-wrapper">
             <header className="article-pics">
-                <img className="img" src={leftPic ? leftPic : undefined} alt={undefined}/>
-                <img className="img" src={mainPic ? mainPic : undefined} alt={undefined}/>
-                <img className="img" src={rightPic ? rightPic : undefined} alt={undefined}/>
+                <img className="img" src={leftPic ? leftPic : undefined} alt={leftPic}/>
+                <img className="img" src={mainPic ? mainPic : undefined} alt={mainPic}/>
+                <img className="img" src={rightPic ? rightPic : undefined} alt={rightPic}/>
             </header>
             <section className="article-text">
-                <h2>{article.title}</h2>
-                <p>{article.content}</p>
+                <div className="text">
+                    <h2>{article.title}</h2>
+                    <p>{article.content}</p>
+                </div>
+                <img className="side" src={sidePic || undefined} alt={sidePic}/>
             </section>
         </div>
     )

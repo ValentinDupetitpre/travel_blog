@@ -13,7 +13,7 @@ const Card = (props) => {
   return (
     <div className="card-wrapper" onClick={goToArticle}>
       <div className="image-preview">
-        <img src={picture ? picture : undefined} alt={undefined}/>
+        <img src={picture ? picture : undefined} alt={picture}/>
       </div>
       <div className="text-preview">
         <h2>{props.title}</h2>

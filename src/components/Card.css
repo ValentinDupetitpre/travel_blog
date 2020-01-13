@@ -47,3 +47,13 @@
     -webkit-box-orient: vertical;
     margin-top: 15px;
 }
+
+@media only screen and (max-device-width: 600px) {
+    .card-wrapper {
+        width: 95%;
+    }
+
+    .card-wrapper .image-preview img{
+        width: 100%;
+    }
+}

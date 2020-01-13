@@ -1,5 +1,6 @@
 .home {
   text-align: center;
+  overflow: hidden;
 }
 
 .home .presentation{
@@ -30,4 +31,18 @@
 
 .home .presentation p{
   width: 30%;
+}
+
+@media only screen and (max-device-width: 600px) {
+
+  .home .presentation .text{
+    flex-direction: column;
+    text-align: justify;
+  }
+
+  .home .presentation p{
+    width: 90%;
+    margin: 10px auto;
+  }
+
 }

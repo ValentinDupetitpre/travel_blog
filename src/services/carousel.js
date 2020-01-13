@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react'
-import firebase, {storage} from '../config/firebase'
+import {storage} from '../config/firebase'
 
 const useCarousel = () => {
     const [images, setImages] = useState([])

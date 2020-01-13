@@ -54,12 +54,12 @@ const UpdateCarousel = () => {
             <h2>Sélectionner une photo à supprimer du carousel</h2>
             <select name={name} onChange={handleImageSelection}>
                 {images.map(image => 
-                    <option value={image.name} key={image.id}>{image.name}</option>
+                    <option value={image.name} key={image.name}>{image.name}</option>
                 )}
             </select>
             <label>Modifier le nom du tableau</label>
             <input type='text' value={name} onChange={e => setName(e.currentTarget.value)} />
-            <img src={picture ? picture : null} />
+            <img src={picture ? picture : null} key={picture} alt={picture}/>
             <button onClick={onSubmit}>Sauvegarder les modifications</button>
             <button onClick={onDelete}>Supprimer la photo</button>
         </div>
