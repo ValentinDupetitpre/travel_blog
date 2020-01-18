@@ -19,6 +19,12 @@
   margin: 30px 0;
 }
 
+.home .presentation h5{
+  font-size: 30px;
+  font-family: Kalam;
+  margin: 10px;
+}
+
 .home .presentation hr{
   width: 17%;
   height: 3px;
@@ -31,24 +37,38 @@
   display: flex;
   margin: auto;
   justify-content: space-evenly;
+  text-align: left;
 }
 
-.home .presentation p{
+.home .presentation .left .persons{
+  display: flex;
+  margin: auto;
+  justify-content: space-evenly;
+  line-height: 20px;
+}
+.home .presentation .left .person{
+  width: 45%;
+}
+
+.home .presentation .text{
   font-family: Kalam;
   font-size: 18px;
-  width: 30%;
+  width: 40%;
 }
 
 @media only screen and (max-device-width: 600px) {
-
+  
   .home .presentation .text-wrapper{
     flex-direction: column;
     text-align: justify;
   }
-
+  
   .home .presentation p{
     width: 90%;
     margin: 10px auto;
   }
-
+  
+  .home .presentation .text{
+    width: 100%;
+  }
 }

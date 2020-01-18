@@ -1,0 +1,15 @@
+.footer-wrapper{
+    background-color: #E2E2E2;
+    height: 15vh;
+}
+
+.footer-wrapper .copyright{
+    float: right;
+    margin: 10px;
+}
+
+
+.footer-wrapper .insta{
+    width: 35px;
+
+}
