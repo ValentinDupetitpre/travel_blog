@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import firebase from '../../config/firebase'
+import firebase, { storage } from '../../config/firebase'
 import articleService from '../../services/articles'
 
 import TextField from '@material-ui/core/TextField'
@@ -38,6 +38,37 @@ const UpdateArticle = () => {
             .then(() => {
                 resetFields()
             })
+    }
+
+    const deleteFolderContent = (refToDel) => {
+        const ref = storage.ref(refToDel)
+        ref.listAll().then(dir => {
+            dir.items.forEach(fileRef => {
+                fileRef.delete()
+                    .then(() => console.log('fichier supprimé'))
+                    .catch(e => console.log(e))
+            });
+            dir.prefixes.forEach(folderRef => {
+                deleteFolderContent(`${refToDel}/${folderRef}`)
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    const handleDelete = (e) => {
+        const articleId = id
+        firebase
+            .firestore()
+            .collection('articles')
+            .doc(articleId)
+            .delete()
+            .then(() => {
+                deleteFolderContent(`article/${articleId}`)
+                
+            })
+            .catch(e => console.log(e))
 
     }
 
@@ -71,6 +102,9 @@ const UpdateArticle = () => {
                 />
                  <Button className="send" type="submit" variant="contained" color="default" >
                     Modifier 
+                </Button>
+                <Button className="delete" variant="contained" color="secondary" onClick={handleDelete}>
+                    Supprimer
                 </Button>
             </form>
         </div>

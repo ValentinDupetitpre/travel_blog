@@ -11,3 +11,12 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+@font-face {
+  font-family: 'Kalam';
+  src: local('Kalam'), url(./fonts/Kalam-Regular.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'AmaticSC';
+  src: local('AmaticSC'), url(./fonts/AmaticSC-Bold.ttf) format('truetype');
+}

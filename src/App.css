@@ -15,11 +15,11 @@
 }
 
 .app-header h1{
-  font-size: calc(25px + 2vmin);
+  font-size: 75px;
   width: 30%;
-  font-style: italic;
-  border: solid #EEA834;
+  /* border: solid #EEA834; */
   padding: 30px;
+  font-family: AmaticSC;
 }
 
 .app-header img{

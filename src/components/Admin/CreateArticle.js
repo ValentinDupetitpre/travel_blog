@@ -7,8 +7,6 @@ import FileUploader from '../FileUploader'
 import firebase, { storage } from '../../config/firebase'
 
 const CreateArticle = () => {
-    // const [title, setTitle] = useState('')
-    // const [content, setContent] = useState('')
     const [mainPicture, setMainPicture] = useState('')
     const [leftPicture, setLeftPicture] = useState('')
     const [rightPicture, setRightPicture] = useState('')

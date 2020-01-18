@@ -13,6 +13,11 @@
     height: 40vh;
 }
 
+.article-wrapper .article-pics .main{
+    border-left: solid 5px white;
+    border-right: solid 5px white;
+}
+
 .article-wrapper .article-text{
     /* margin: 5rem 5rem; */
     padding: 5rem 5rem;
@@ -26,6 +31,39 @@
 .article-wrapper .article-text .text{
     width: 60%;
     float: left;
+    font-family: Kalam;
+}
+
+.article-wrapper .article-text .text h2{
+    margin-top: -15px;
+    border-bottom: solid 3px;
+    padding-bottom: 10px;
+    font-size: 35px;
+    -webkit-border-image: -webkit-linear-gradient(
+        left,
+        rgba(255,255,255,1) 50%,
+        #EEA833 100%
+    ) 0 0 100% 0/0 0 3px 0 stretch;
+    -moz-border-image: -moz-linear-gradient(
+        left,
+        rgba(255,255,255,1) 50%,
+        #EEA833 100%
+    ) 0 0 100% 0/0 0 3px 0 stretch;
+    -o-border-image: -o-linear-gradient(
+        left,
+        rgba(255,255,255,1) 50%,
+        #EEA833 100%
+    ) 0 0 100% 0/0 0 3px 0 stretch;
+    border-image: linear-gradient(
+        to left,
+        rgba(255,255,255,1) 50%,
+        #EEA833 100%
+    ) 0 0 100% 0/0 0 3px 0 stretch;
+}
+
+.article-wrapper .article-text .text p{
+    padding-top: 20px;
+    font-size: 18px;
 }
 
 .article-wrapper .article-text .side{

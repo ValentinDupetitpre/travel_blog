@@ -4,15 +4,19 @@
 }
 
 .home .presentation{
-  background-color: #E7E9E9;
-  margin-block-start: -3px;
+  background-color: #FDD16A;
+  background: -webkit-linear-gradient(to right, #FCC337, #EEA833);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FCC337, #EEA833); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  margin-block-start: -5px;
   padding: 10px 0 20px 0;
   position: relative;
 }
 
 .home .presentation h3{
-  font-size: 40px;
+  font-size: 65px;
   text-transform: uppercase;
+  font-family: AmaticSc;
+  margin: 30px 0;
 }
 
 .home .presentation hr{
@@ -23,19 +27,21 @@
   margin: -25px auto 40px auto;
 }
 
-.home .presentation .text{
+.home .presentation .text-wrapper{
   display: flex;
   margin: auto;
   justify-content: space-evenly;
 }
 
 .home .presentation p{
+  font-family: Kalam;
+  font-size: 18px;
   width: 30%;
 }
 
 @media only screen and (max-device-width: 600px) {
 
-  .home .presentation .text{
+  .home .presentation .text-wrapper{
     flex-direction: column;
     text-align: justify;
   }

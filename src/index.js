@@ -5,6 +5,9 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
 
+import './fonts/Kalam-Regular.ttf'
+import './fonts/AmaticSC-Bold.ttf'
+
 ReactDOM.render((
     <BrowserRouter>
         <App />

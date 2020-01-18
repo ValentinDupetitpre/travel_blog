@@ -24,14 +24,18 @@
 
 .card-wrapper .text-preview {
     position: relative;
+    border-top: solid #F0AC34 10px;
+    margin-top: -4px;
+    font-family: Kalam;
 }
 
 .card-wrapper .text-preview h2{
-    color: #353535;
-    padding-bottom: 35px;
+    color: #F0AC34;
+    font-size: 33px;
+    /* padding-bottom: 5px;
     border-style: solid;
     border-width: 0 0 3px 0;
-    border-color: #7F7F7F;
+    border-color: #7F7F7F; */
     display: inline-block;
 }
 
@@ -45,7 +49,6 @@
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    margin-top: 15px;
 }
 
 @media only screen and (max-device-width: 600px) {

@@ -66,4 +66,20 @@ const useTopPicture = (ref, position) => {
     return picture
 }
 
-export default {useArticles, useArticle, useMainPicture, useTopPicture}
+const useBottomPics = (ref) => {
+    const [pics, setPics] = useState([])
+
+    useEffect(() => {
+        const picRefs = storage.ref().child(`article/${ref}/bottom`)
+        
+        picRefs.listAll().then(res => {
+            setPics(res.items)
+          }).catch(error => {
+              console.log(error)
+          })
+    }, [ref])
+
+    return pics
+}
+
+export default {useArticles, useArticle, useMainPicture, useTopPicture, useBottomPics}
