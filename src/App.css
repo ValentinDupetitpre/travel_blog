@@ -20,6 +20,7 @@
   /* border: solid #EEA834; */
   padding: 30px;
   font-family: AmaticSC;
+  margin: 0;
 }
 
 .app-header img{
@@ -27,3 +28,9 @@
   cursor: pointer;
 }
 
+@media only screen and (max-device-width: 600px) {
+  
+  .app-header h1{
+    display: none;
+  }
+}

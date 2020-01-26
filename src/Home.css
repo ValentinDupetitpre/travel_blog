@@ -43,11 +43,15 @@
 .home .presentation .left .persons{
   display: flex;
   margin: auto;
-  justify-content: space-evenly;
+  justify-content: space-between;
   line-height: 20px;
 }
 .home .presentation .left .person{
   width: 45%;
+}
+
+.home .presentation .text .signature{
+  float: right;
 }
 
 .home .presentation .text{

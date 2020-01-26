@@ -15,7 +15,7 @@ const App = (props) => {
   return (
     <div className="app">
       <header className="app-header" onClick={goToHome}>
-          <img src="https://firebasestorage.googleapis.com/v0/b/travel-blog-f8f0d.appspot.com/o/home%2Flogo.png?alt=media&token=94296b11-64f2-43a4-b4bc-61655daff67d" alt='logo'/>
+          <img src="https://firebasestorage.googleapis.com/v0/b/travel-blog-f8f0d.appspot.com/o/home%2Flogo.png?alt=media&token=94296b11-64f2-43a4-b4bc-61655daff67d" alt='aux antipodes' key="aux-antipodes" title="Accueil"/>
           <h1>Voyage en terre Kiwi</h1>
       </header>
       <Switch>
