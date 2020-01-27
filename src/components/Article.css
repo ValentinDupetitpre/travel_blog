@@ -91,25 +91,43 @@
     cursor: pointer;
     border-radius: 3px;
 }
+.article-wrapper .bottom-pics-title{
+    font-family: AmaticSc;
+    font-size: 50px;
+    margin: 0 0 20px;
+}
 
 @media only screen and (max-device-width: 600px) {
     .article-wrapper .article-pics{
         width: 100%;
+        margin-bottom: 15px;
     }
     .article-wrapper .article-pics img{
         height: 25vh;
+        width: 80%;
     }
-
+    
     .article-wrapper .article-text{
         padding: 15px;
     }
     .article-wrapper .article-text .text{
         width: 95%;
     }
-
+    
     .article-wrapper .article-text .side{
-        width: 95%;
-        float: none;
-        margin-top: 5px;
+        max-width: unset;
+        width: 80%;
+        float: inherit;
+        display: block;
+        margin: 5px auto;
+    }
+    .article-wrapper .bottom-pics{
+        padding: 0 1rem 1rem;
+        column-width: 8rem;
+    }
+    .article-wrapper .bottom-pics-title{
+        font-family: AmaticSc;
+        font-size: 35px;
+        margin: 0 0 20px;
     }
 }
