@@ -12,7 +12,7 @@ const Preview = (props) => {
             <hr />
             <div className="preview-wrapper">
                 {articles.map(preview => 
-                    <Card key={preview.id} id={preview.id} title={preview.title} content={preview.content} picture={preview.mainPicture}/>
+                    <Card key={preview.id} id={preview.id} title={preview.title} created={preview.created} content={preview.content} picture={preview.mainPicture}/>
                 )
                 }
             </div>

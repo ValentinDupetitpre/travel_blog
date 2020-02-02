@@ -1,6 +1,12 @@
 import {useState, useEffect} from 'react'
 import firebase, {storage} from '../config/firebase'
 
+
+const dateFromSec = (timestamp) => {
+    const date = new Date(parseInt(timestamp.seconds*1000, 10))
+    return date.toLocaleDateString()
+}
+
 const useArticles = () => {
     const [articlesPreview, setArticlesPreview] = useState([])
 
@@ -12,7 +18,7 @@ const useArticles = () => {
             .onSnapshot((snapshot) => {
                 const articles = snapshot.docs.map(doc => ({
                     id: doc.id,
-                    created: doc.data().created,
+                    created: dateFromSec(doc.data().created),
                     title: doc.data().title,
                     content: doc.data().content
                 }))
@@ -20,7 +26,6 @@ const useArticles = () => {
             })
         return () => connection()
     }, [])
-
     return articlesPreview
 }
 

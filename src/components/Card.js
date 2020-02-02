@@ -17,7 +17,8 @@ const Card = (props) => {
       </div>
       <div className="text-preview">
         <h2>{props.title}</h2>
-        <p>{props.content}</p>
+        <p className="content">{props.content}</p>
+        <p className="date">{props.created}</p>
       </div>
     </div>
   )
