@@ -16,7 +16,7 @@ const CreateArticle = () => {
         const uploadMainPic = storage.ref(`article/${ref.id}/main`).put(mainPicture, {name:'main'})
         const uploadLeftPic = storage.ref(`article/${ref.id}/left`).put(leftPicture, {name:'left'})
         const uploadRightPic = storage.ref(`article/${ref.id}/right`).put(rightPicture, {name:'right'})
-        const uploadSidePic = storage.ref(`article/${ref.id}/side`).put(rightPicture, {name:'side'})
+        const uploadSidePic = storage.ref(`article/${ref.id}/side`).put(sidePicture, {name:'side'})
         uploadMainPic.on(
             'state_changed',
             snapshot => {

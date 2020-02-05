@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 
 import './Article.css'
 import articleService from '../services/articles'
+import ModalComponent from './ModalComponent'
 
 const Article = (props) => {
     const id = props.match.params.articleId
@@ -13,14 +14,17 @@ const Article = (props) => {
     const sidePic = articleService.useTopPicture(id, 'side')
     const bottomPicsRef = articleService.useBottomPics(id)
 
+    const [openModal, setOpenModal] = useState(false)
+    const [indexForModal, setIndexForModal] = useState(null)
+
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
     useEffect(() => {
         const urls = []
-        let index = 0
-        bottomPicsRef.map(pic => pic.getDownloadURL().then(url => {
+        let index = 1
+        bottomPicsRef.forEach(pic => pic.getDownloadURL().then(url => {
             const img = {
                 id: index,
                 name: pic.name,
@@ -28,17 +32,48 @@ const Article = (props) => {
             }
             urls.push(img)
             index++
+            if(index === bottomPicsRef.length +1){
+                // setBottomPics(urls)
+                sortPaintings(urls)
+            }
         }))
-        setBottomPics(urls)
     }, [bottomPicsRef])
 
+    const sortPaintings = (array) => {
+        const bottomPics = document.getElementById('bottom-pics') || {};
+        const columns = Math.floor(bottomPics.clientWidth/240)
+        const out = [];
+        let col = 0
+        while(col < columns) {
+            for(let i = 0; i < array.length; i += columns) {
+                let _val = array[i + col];
+                if (_val !== undefined)
+                    out.push(_val);
+            }
+            col++;
+        }
+        setBottomPics(out)
+    }
+
+    const handlePicClick = (id) => {
+        callModal(bottomPics.findIndex(pic => pic.id === id))
+    }
+
     const displayBottomPictures = () => {
+        console.log(bottomPics)
         return bottomPics.map(pic => 
-            <div>
-                toto
-                <img className="bottom-pic" key={pic.id} src={pic.url} alt={pic.name}/>
-            </div>
+            <img className="bottom-pic" key={pic.name} src={pic.url} alt={pic.name} onClick={() => handlePicClick(pic.id)}/>
         )
+    }
+    
+    const callModal = (index) => {
+        setOpenModal(true)
+        setIndexForModal(index)
+    } 
+
+    const closeModal = () => {
+        setOpenModal(false)
+        setIndexForModal(null)
     }
 
     return (
@@ -55,7 +90,17 @@ const Article = (props) => {
                 </div>
                 <img className="side" src={sidePic || undefined} alt={sidePic}/>
             </section>
-            {displayBottomPictures()}
+            {bottomPics && 
+                <React.Fragment>
+                    {bottomPics.length>0 && 
+                        <h3 className="bottom-pics-title">Quelques photos...</h3>
+                    }
+                    <div id="bottom-pics" className="bottom-pics">
+                        {displayBottomPictures()}
+                        <ModalComponent open={openModal} imgArray={bottomPics} indexImg={indexForModal} close={closeModal}/>
+                    </div>
+                </React.Fragment>
+            }
         </div>
     )
 }
