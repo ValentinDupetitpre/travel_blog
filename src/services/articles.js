@@ -87,4 +87,26 @@ const useBottomPics = (ref) => {
     return pics
 }
 
-export default {useArticles, useArticle, useMainPicture, useTopPicture, useBottomPics}
+const useComments = (articleId) => {
+    const [comments, setComments] = useState([])
+
+    useEffect(() => {
+        const connection = firebase
+            .firestore()
+            .collection(`articles/${articleId}/comments`)
+            .orderBy("created", "desc")
+            .onSnapshot((snapshot) => {
+                const comms = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    created: dateFromSec(doc.data().created),
+                    name: doc.data().name,
+                    comment: doc.data().comment
+                }))
+                setComments(comms)
+            })
+        return () => connection()
+    }, [])
+    return comments
+}
+
+export default {useArticles, useArticle, useMainPicture, useTopPicture, useBottomPics, useComments}

@@ -1,0 +1,53 @@
+.comments-wrapper{
+    white-space: pre-line;
+    text-align: justify;
+}
+.comments-wrapper .error{
+    color: red;
+    margin-top: 0;
+}
+
+.comments-wrapper .comments-title{
+    font-family: AmaticSC;
+    font-size: 40px;
+    margin-bottom: 0;
+}
+
+.comments-wrapper .comment{
+    margin: 0 5rem;
+}
+
+.comments-wrapper h4{
+    text-align: center;
+    font-family: AmaticSC;
+    font-size: 30px;
+    margin: 0;
+}
+
+.comments-wrapper .comment h5{
+    font-size: 1em;
+    text-decoration: underline;
+}
+
+.comments-wrapper #create-comments{
+    margin: 5rem;
+}
+
+@media only screen and (max-device-width: 600px) {
+    .comments-wrapper{
+        margin-bottom: 2rem;
+    }
+
+    .comments-wrapper .comments-title{
+        font-size: 35px;
+    }
+
+    .comments-wrapper #create-comments{
+        margin: 3rem 15px;
+    }
+
+    .comments-wrapper .comment{
+        margin: 0 1rem;
+    }
+
+}

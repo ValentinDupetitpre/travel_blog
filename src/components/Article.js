@@ -3,6 +3,7 @@ import React, {useState, useEffect} from 'react'
 import './Article.css'
 import articleService from '../services/articles'
 import ModalComponent from './ModalComponent'
+import Comments from './Comments'
 
 const Article = (props) => {
     const id = props.match.params.articleId
@@ -101,6 +102,7 @@ const Article = (props) => {
                     </div>
                 </React.Fragment>
             }
+            <Comments articleId={id}/>
         </div>
     )
 }
