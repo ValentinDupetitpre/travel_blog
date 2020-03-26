@@ -3,6 +3,15 @@
   overflow: hidden;
 }
 
+.home .general-info{
+  background-color: rgba(255, 0, 0, 0.788);
+  padding: 15px;
+}
+
+.home .general-info h3{
+  font-size: 25px;
+}
+
 .home .presentation{
   background-color: #FDD16A;
   background: -webkit-linear-gradient(to right, #FCC337, #EEA833);  /* Chrome 10-25, Safari 5.1-6 */
