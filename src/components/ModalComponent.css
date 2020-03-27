@@ -241,6 +241,7 @@
   }
 
   .right-enter {
+    z-index: 15;
     left: 100%;
     transform: translateX(0%);
   }
@@ -252,7 +253,8 @@
   }
 
   .right-leave {
-    left: 0;
+    z-index: 5;
+    left: 50%;
     transform: translateX(-50%);
   }
 
@@ -263,6 +265,7 @@
   }
 
   .left-enter {
+    z-index: 15;
     left: -100vw;
     transform: translateX(0%);
   }
@@ -274,7 +277,8 @@
   }
 
   .left-leave {
-    left: 0;
+    z-index: 5;
+    left: 50%;
     transform: translateX(-50%);
   }
 
