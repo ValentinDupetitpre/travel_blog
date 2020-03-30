@@ -5,6 +5,7 @@ import UpdateCarousel from './UpdateCarousel'
 import CreateArticle from './CreateArticle'
 import UpdateArticle from './UpdateArticle'
 import AddArticlePic from './AddArticlePic'
+import UpdateArticleMainsPics from './UpdateArticleMainsPics'
 
 import './Admin.css'
 
@@ -17,6 +18,7 @@ const Admin = () => {
             <CreateArticle />
             <UpdateArticle />
             <AddArticlePic />
+            <UpdateArticleMainsPics />
         </div>
     )
 }

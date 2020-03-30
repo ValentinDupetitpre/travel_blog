@@ -19,3 +19,9 @@
     margin: auto;
     justify-content: center;
 }
+
+.img-name{
+    width: 120px;
+    margin: auto;
+    padding-top: 15px;
+}
