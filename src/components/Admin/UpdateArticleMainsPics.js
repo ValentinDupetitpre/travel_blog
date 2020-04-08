@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import firebase, { storage } from '../../config/firebase'
+import { storage } from '../../config/firebase'
 import articleService from '../../services/articles'
 
 import Button from '@material-ui/core/Button'

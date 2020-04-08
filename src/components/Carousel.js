@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import useCarousel from '../services/carousel.js'
 import './Carousel.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
+import Placeholder from '../media/placeholder.png'
 
 const Carousel = () => {
     const imagesRef = useCarousel()
@@ -54,7 +55,7 @@ const Carousel = () => {
                 transitionEnterTimeout={1000}
                 transitionLeaveTimeout={1000}>
 
-                <img key={selectedImg ? selectedImg.id : null} src={selectedImg ? selectedImg.url : 'https://via.placeholder.com/468x120?text=Chargement+de+la+bannière'} alt={'carousel'}/>
+                <img key={selectedImg ? selectedImg.id : null} src={selectedImg ? selectedImg.url : Placeholder} alt={'carousel'}/>
             </ReactCSSTransitionGroup>
            
         </section>

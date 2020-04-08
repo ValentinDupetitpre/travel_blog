@@ -7,7 +7,7 @@ const Footer = (props) => {
     return(
         <footer className="footer-wrapper">
             {/* <div className="pictos"> */}
-                <a href="https://www.instagram.com/lngvhelene/?hl=fr" target="_blank">
+                <a href="https://www.instagram.com/lngvhelene/?hl=fr" target="_blank" rel="noopener noreferrer">
                     <img className="insta" alt="instagram" src="https://firebasestorage.googleapis.com/v0/b/travel-blog-f8f0d.appspot.com/o/home%2Finstagram.png?alt=media&token=17ebac78-e315-46aa-941c-c5c03241ddf2"/>
                 </a>
                 <div className="email">

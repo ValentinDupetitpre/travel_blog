@@ -9,6 +9,7 @@ const dateFromSec = (timestamp) => {
 
 const useArticles = () => {
     const [articlesPreview, setArticlesPreview] = useState([])
+    const [unmounted, setUnmounted] = useState(false)
 
     useEffect(() => {
         const connection = firebase
@@ -16,21 +17,27 @@ const useArticles = () => {
             .collection('articles')
             .orderBy("created", "desc")
             .onSnapshot((snapshot) => {
-                const articles = snapshot.docs.map(doc => ({
-                    id: doc.id,
-                    created: dateFromSec(doc.data().created),
-                    title: doc.data().title,
-                    content: doc.data().content
-                }))
-                setArticlesPreview(articles)
+                if(!unmounted){
+                    const articles = snapshot.docs.map(doc => ({
+                        id: doc.id,
+                        created: dateFromSec(doc.data().created),
+                        title: doc.data().title,
+                        content: doc.data().content
+                    }))
+                    setArticlesPreview(articles)
+                }
             })
-        return () => connection()
-    }, [])
+        return () => {
+            connection()
+            setUnmounted(true)
+        }
+    }, [unmounted])
     return articlesPreview
 }
 
 const useArticle = (id) => {
     const [article, setArticle] = useState({})
+    const [unmounted, setUnmounted] = useState(false)
 
     useEffect(() => {
         const connection = firebase
@@ -38,51 +45,62 @@ const useArticle = (id) => {
             .collection('articles')
             .doc(id)
             .onSnapshot((snapshot) => {
-                setArticle({
-                    id: snapshot.id,
-                    ...snapshot.data()
-                })
+                if(!unmounted){
+                    setArticle({
+                        id: snapshot.id,
+                        ...snapshot.data()
+                    })
+                }
             })
-        return () => connection()
-    }, [id])
+        return () => {
+            connection()
+            setUnmounted(true)
+        }
+    }, [id, unmounted])
     
     return article
 }
 
-const useMainPicture = (ref) => {
-    const [picture, setPicture] = useState({})
-
-    useEffect(() => {
-        const picRef = storage.ref().child(`article/${ref}/main`)
-        picRef.getDownloadURL().then(url => setPicture(url))
-    }, [ref])
-
-    return picture
-}
-
 const useTopPicture = (ref, position) => {
     const [picture, setPicture] = useState({})
+    const [unmounted, setUnmounted] = useState(false)
 
     useEffect(() => {
         const picRef = storage.ref().child(`article/${ref}/${position}`)
-        picRef.getDownloadURL().then(url => setPicture(url))
-    }, [ref, position])
+        picRef.getDownloadURL()
+            .then(url => {
+                if(!unmounted){
+                    setPicture(url)}
+                })
+            .catch(err => {
+                if(!unmounted)
+                    console.log(err)
+            })
+        
+            return () => setUnmounted(true)
+    }, [ref, position, unmounted])
 
     return picture
 }
 
 const useBottomPics = (ref) => {
     const [pics, setPics] = useState([])
+    const [unmounted, setUnmounted] = useState(false)
 
     useEffect(() => {
         const picRefs = storage.ref().child(`article/${ref}/bottom`)
         
         picRefs.listAll().then(res => {
-            setPics(res.items)
+            if(!unmounted){
+                setPics(res.items)
+            }
           }).catch(error => {
-              console.log(error)
+              if(!unmounted)
+                  console.log(error)
           })
-    }, [ref])
+
+          return () => setUnmounted(true)
+    }, [ref, unmounted])
 
     return pics
 }
@@ -105,8 +123,29 @@ const useComments = (articleId) => {
                 setComments(comms)
             })
         return () => connection()
-    }, [])
+    }, [articleId])
     return comments
 }
 
-export default {useArticles, useArticle, useMainPicture, useTopPicture, useBottomPics, useComments}
+const useMapPoints = (articleId) => {
+    const [points, setPoints] = useState([])
+
+    useEffect(() => {
+        const connection = firebase
+            .firestore()
+            .collection(`articles/${articleId}/map`)
+            .onSnapshot((snapshot) => {
+                const pointsArray = snapshot.docs.map(doc => ({
+                    id: doc.id,
+                    name: doc.data().name,
+                    latitude: doc.data().latitude,
+                    longitude: doc.data().longitude
+                }))
+                setPoints(pointsArray)
+            })
+            return () => connection()
+    }, [articleId])
+    return points
+}
+
+export default {useArticles, useArticle, useTopPicture, useBottomPics, useComments, useMapPoints}

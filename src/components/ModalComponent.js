@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import './ModalComponent.css'
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
 
@@ -9,50 +9,43 @@ function ModalComponent(props){
     const [swipeAbs, setSwipeAbs] = useState(0)
     const [swiping, setSwiping] = useState(false)
     const [imgComesFrom, SetImgComesFrom] = useState('left')
-
-    useEffect(()=> {
-        window.onpopstate = (e) => {
-            closeModal()
-        }
-        return () => closeModal()
-    }, [])
-
-
+    const close = props.close
+    
     useEffect(()=>{
         setVisible(props.open)
     }, [props.open])
-
+    
     useEffect(()=>{
         if(props.indexImg || props.indexImg === 0) {
             setCurrentIndex(props.indexImg)
             setImg(props.imgArray[props.indexImg])
         }
-    }, [props.indexImg])
-
+    }, [props.indexImg, props.imgArray])
+    
     useEffect(()=>{
         setVisible(false)
     },[])
-
+    
     useEffect(()=>{
         document.addEventListener("keydown", keyDown);
         return () => {
             document.removeEventListener("keydown", keyDown);
         }
     })
-
+    
     const keyDown = (e) => {
         switch (e.key) {
             case 'ArrowLeft':
-                goLeft()
-                break;
+            goLeft()
+            break;
             case 'ArrowRight':
-                goRight()
+            goRight()
                 break;
             case 'Escape':
-                closeModal()
-                break;
+            closeModal()
+            break;
             default:
-                break;
+            break;
         }
     }
     function goRight(){
@@ -77,17 +70,23 @@ function ModalComponent(props){
         }
     }
 
-    function closeModal(){
+    const closeModal = useCallback(() => {
         setVisible(false)
-        props.close()
+        close()
         setImg(null)
-    }
+    }, [close])
 
+    useEffect(()=> {
+        window.onpopstate = (e) => {
+            closeModal()
+        }
+    }, [closeModal])
+    
     const startTouching = (e) => {
         const touch = e.touches[0];
         setSwipeAbs(touch.clientX);
     }
-
+    
     const touching = (e) => {
         if (e.changedTouches && e.changedTouches.length) {
             setSwiping(true);
@@ -103,7 +102,7 @@ function ModalComponent(props){
         setSwipeAbs(0)
         setSwiping(false)
     }
-
+    
     function modalOverview(){
         return visible ? (
             <div id="myModal" className="modal">

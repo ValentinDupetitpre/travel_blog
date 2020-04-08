@@ -4,6 +4,7 @@ import './Article.css'
 import articleService from '../services/articles'
 import ModalComponent from './ModalComponent'
 import Comments from './Comments'
+import Map from './Map'
 
 const Article = (props) => {
     const id = props.match.params.articleId
@@ -61,7 +62,6 @@ const Article = (props) => {
     }
 
     const displayBottomPictures = () => {
-        console.log(bottomPics)
         return bottomPics.map(pic => 
             <img className="bottom-pic" key={pic.name} src={pic.url} alt={pic.name} onClick={() => handlePicClick(pic.id)}/>
         )
@@ -80,9 +80,9 @@ const Article = (props) => {
     return (
         <div className="article-wrapper">
             <header className="article-pics">
-                <img className="img" src={leftPic ? leftPic : undefined} alt={leftPic}/>
-                <img className="img main" src={mainPic ? mainPic : undefined} alt={mainPic}/>
-                <img className="img" src={rightPic ? rightPic : undefined} alt={rightPic}/>
+                <img className="img" src={leftPic ? leftPic : undefined} alt={leftPic || ""}/>
+                <img className="img main" src={mainPic ? mainPic : undefined} alt={mainPic || ""}/>
+                <img className="img" src={rightPic ? rightPic : undefined} alt={rightPic || ""}/>
             </header>
             <section className="article-text">
                 <div className="text">
@@ -102,6 +102,7 @@ const Article = (props) => {
                     </div>
                 </React.Fragment>
             }
+            <Map articleId={id}/>
             <Comments articleId={id}/>
         </div>
     )

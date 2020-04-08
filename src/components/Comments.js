@@ -19,7 +19,6 @@ const Comments = (props) => {
             setError("On aimerai bien connaitre ton petit nom")
         }else if(data.get('comment') === ''){
             setError("Ton message est vide, écris nous quelque chose")
-
         } else if(props.articleId){
             firebase
                 .firestore()
@@ -77,8 +76,8 @@ const Comments = (props) => {
                 <h4>Commentaires précédents</h4>
             }
             {comments
-            && comments.map(comment => 
-                <article className="comment">
+            && comments.map((comment, i) => 
+                <article key={i} className="comment">
                     <h5>{comment.name}</h5>
                     <p>{comment.comment}</p>
                 </article>
