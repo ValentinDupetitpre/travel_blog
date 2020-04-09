@@ -1,6 +1,14 @@
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useRef} from 'react'
 import firebase, {storage} from '../config/firebase'
 
+const useIsMountedRef = () => {
+    const isMountedRef = useRef(null);
+    useEffect(() => {
+      isMountedRef.current = true;
+      return () => isMountedRef.current = false;
+    });
+    return isMountedRef;
+  }
 
 const dateFromSec = (timestamp) => {
     const date = new Date(parseInt(timestamp.seconds*1000, 10))
@@ -37,7 +45,7 @@ const useArticles = () => {
 
 const useArticle = (id) => {
     const [article, setArticle] = useState({})
-    const [unmounted, setUnmounted] = useState(false)
+    const isMountedRef = useIsMountedRef()
 
     useEffect(() => {
         const connection = firebase
@@ -45,62 +53,56 @@ const useArticle = (id) => {
             .collection('articles')
             .doc(id)
             .onSnapshot((snapshot) => {
-                if(!unmounted){
+                if(isMountedRef.current){
                     setArticle({
                         id: snapshot.id,
                         ...snapshot.data()
                     })
                 }
             })
-        return () => {
-            connection()
-            setUnmounted(true)
-        }
-    }, [id, unmounted])
+        return () => connection()
+    }, [id, isMountedRef])
     
     return article
 }
 
 const useTopPicture = (ref, position) => {
     const [picture, setPicture] = useState({})
-    const [unmounted, setUnmounted] = useState(false)
+    const isMountedRef = useIsMountedRef()
 
     useEffect(() => {
         const picRef = storage.ref().child(`article/${ref}/${position}`)
         picRef.getDownloadURL()
             .then(url => {
-                if(!unmounted){
+                if(isMountedRef.current){
                     setPicture(url)}
                 })
             .catch(err => {
-                if(!unmounted)
+                if(isMountedRef.current)
                     console.log(err)
             })
-        
-            return () => setUnmounted(true)
-    }, [ref, position, unmounted])
+    }, [ref, position, isMountedRef])
 
     return picture
 }
 
 const useBottomPics = (ref) => {
     const [pics, setPics] = useState([])
-    const [unmounted, setUnmounted] = useState(false)
+    const isMountedRef = useIsMountedRef()
 
     useEffect(() => {
         const picRefs = storage.ref().child(`article/${ref}/bottom`)
         
         picRefs.listAll().then(res => {
-            if(!unmounted){
+            if(isMountedRef.current){
                 setPics(res.items)
             }
           }).catch(error => {
-              if(!unmounted)
+              if(isMountedRef.current)
                   console.log(error)
           })
 
-          return () => setUnmounted(true)
-    }, [ref, unmounted])
+    }, [ref, isMountedRef])
 
     return pics
 }
@@ -148,4 +150,4 @@ const useMapPoints = (articleId) => {
     return points
 }
 
-export default {useArticles, useArticle, useTopPicture, useBottomPics, useComments, useMapPoints}
+export default {useArticles, useArticle, useTopPicture, useBottomPics, useComments, useMapPoints, useIsMountedRef}

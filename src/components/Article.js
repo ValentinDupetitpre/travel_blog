@@ -7,6 +7,7 @@ import Comments from './Comments'
 import Map from './Map'
 
 const Article = (props) => {
+    const isMountedRef = articleService.useIsMountedRef()
     const id = props.match.params.articleId
     const article = articleService.useArticle(id)
     const [bottomPics, setBottomPics] = useState([])
@@ -26,20 +27,22 @@ const Article = (props) => {
     useEffect(() => {
         const urls = []
         let index = 1
-        bottomPicsRef.forEach(pic => pic.getDownloadURL().then(url => {
-            const img = {
-                id: index,
-                name: pic.name,
-                url
-            }
-            urls.push(img)
-            index++
-            if(index === bottomPicsRef.length +1){
-                // setBottomPics(urls)
-                sortPaintings(urls)
-            }
-        }))
-    }, [bottomPicsRef])
+        if(isMountedRef.current){
+            bottomPicsRef.forEach(pic => pic.getDownloadURL().then(url => {
+                const img = {
+                    id: index,
+                    name: pic.name,
+                    url
+                }
+                urls.push(img)
+                index++
+                if(index === bottomPicsRef.length +1){
+                    // setBottomPics(urls)
+                    sortPaintings(urls)
+                }
+            }))
+        }
+    }, [bottomPicsRef, isMountedRef])
 
     const sortPaintings = (array) => {
         const bottomPics = document.getElementById('bottom-pics') || {};
