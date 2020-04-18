@@ -6,6 +6,8 @@ import ModalComponent from './ModalComponent'
 import Comments from './Comments'
 import Map from './Map'
 
+import ModalSlider from './slider/ModalSlider'
+
 const Article = (props) => {
     const isMountedRef = articleService.useIsMountedRef()
     const id = props.match.params.articleId
@@ -46,12 +48,13 @@ const Article = (props) => {
 
     const sortPaintings = (array) => {
         const bottomPics = document.getElementById('bottom-pics') || {};
-        const columns = Math.floor(bottomPics.clientWidth/240)
+        const screenWidth = window.innerWidth
+        const columns = Math.floor((bottomPics.clientWidth - (screenWidth>600 ? 160 : 0))/240)
         const out = [];
         let col = 0
         while(col < columns) {
             for(let i = 0; i < array.length; i += columns) {
-                let _val = array[i + col];
+                let _val = array[i + col]
                 if (_val !== undefined)
                     out.push(_val);
             }
@@ -71,13 +74,13 @@ const Article = (props) => {
     }
     
     const callModal = (index) => {
-        setOpenModal(true)
         setIndexForModal(index)
+        setOpenModal(true)
     } 
 
     const closeModal = () => {
-        setOpenModal(false)
         setIndexForModal(null)
+        setOpenModal(false)
     }
 
     return (
@@ -101,8 +104,9 @@ const Article = (props) => {
                     }
                     <div id="bottom-pics" className="bottom-pics">
                         {displayBottomPictures()}
-                        <ModalComponent open={openModal} imgArray={bottomPics} indexImg={indexForModal} close={closeModal}/>
+                        {/* <ModalComponent open={openModal} imgArray={bottomPics} indexImg={indexForModal} close={closeModal}/> */}
                     </div>
+                <ModalSlider open={openModal} slides={bottomPics} startIndex={indexForModal} close={closeModal}/>
                 </React.Fragment>
             }
             <Map articleId={id}/>
