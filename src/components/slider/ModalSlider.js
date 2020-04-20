@@ -1,41 +1,29 @@
 /** @jsx jsx */
-import {useState, useEffect, useCallback} from 'react'
+import {useState, useEffect} from 'react'
 import ModalSliderContent from './ModalSliderContent'
 import ModalSlide from './ModalSlide'
 import Arrow from './Arrow'
-
-import './Modal.css'
-import { jsx } from '@emotion/core'
+import { css, jsx } from '@emotion/core'
 
 
 const ModalSlider = (props) => {
-    const [isVisible, setIsVisible] = useState(false)
     const getWidth = () => window.innerWidth
     const [state, setState] = useState({
         activeIndex: 0,
         translate: 0,
         transition: 0.45
     })
-    const close = props.close
     const { translate, transition, activeIndex } = state
 
     useEffect(()=>{
-        setIsVisible(props.open)
         setState({
             transition,
-            activeIndex: props.startIndex,
+            activeIndex: props.startIndex || 0,
             translate: props.startIndex * getWidth()
         })
-    }, [props.open, props.startIndex, transition])
-
-    const closeModal = useCallback(() => {
-        setIsVisible(false)
-        close()
-    }, [close])
-
+    }, [props.startIndex, transition])
 
     useEffect(()=>{
-        console.log(props.slides)
         document.addEventListener("keydown", keyDown);
         return () => {
             document.removeEventListener("keydown", keyDown);
@@ -49,9 +37,6 @@ const ModalSlider = (props) => {
                 break;
             case 'ArrowRight':
                 nextSlide()
-                break;
-            case 'Escape':
-                closeModal()
                 break;
             default:
                 break;
@@ -91,9 +76,13 @@ const ModalSlider = (props) => {
     }
 
     return (
-        isVisible ? 
-        <div className="modal-slider-wrapper">    
-            <span className="close" onClick={closeModal}>&times;</span>
+        <div css={css`
+                position: relative;
+                height: ${props.height};
+                width: 100vw;
+                margin: 0 auto;
+                overflow: hidden;
+            `}>
             <ModalSliderContent
                 translate={translate}
                 transition={transition}
@@ -101,13 +90,12 @@ const ModalSlider = (props) => {
                 height="100%"
             >
                 {props.slides.map((slide, i) => (
-                    <ModalSlide key={slide + i} content={slide.url} />
+                    <ModalSlide key={slide + i} content={slide.url} displaySize={props.displaySize}/>
                 ))}
             </ModalSliderContent>
             <Arrow direction="left" handleClick={prevSlide} />
             <Arrow direction="right" handleClick={nextSlide} />
         </div>
-        : <div></div>
     )
 }
 

@@ -2,11 +2,10 @@ import React, {useState, useEffect} from 'react'
 
 import './Article.css'
 import articleService from '../services/articles'
-import ModalComponent from './ModalComponent'
 import Comments from './Comments'
 import Map from './Map'
 
-import ModalSlider from './slider/ModalSlider'
+import ModalWrapper from './slider/ModalWrapper'
 
 const Article = (props) => {
     const isMountedRef = articleService.useIsMountedRef()
@@ -104,9 +103,8 @@ const Article = (props) => {
                     }
                     <div id="bottom-pics" className="bottom-pics">
                         {displayBottomPictures()}
-                        {/* <ModalComponent open={openModal} imgArray={bottomPics} indexImg={indexForModal} close={closeModal}/> */}
                     </div>
-                <ModalSlider open={openModal} slides={bottomPics} startIndex={indexForModal} close={closeModal}/>
+                <ModalWrapper open={openModal} slides={bottomPics} startIndex={indexForModal} close={closeModal}/>
                 </React.Fragment>
             }
             <Map articleId={id}/>

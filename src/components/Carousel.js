@@ -1,63 +1,35 @@
 import React, {useState, useEffect} from 'react'
 import useCarousel from '../services/carousel.js'
+import articleService from '../services/articles'
 import './Carousel.css'
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group'
-import Placeholder from '../media/placeholder.png'
+import ModalSlider from './slider/ModalSlider'
 
 const Carousel = () => {
     const imagesRef = useCarousel()
-    const [images, setImages] = useState([])
-    const [selectedImg, setSelectedImg] = useState(null)
-    const [imgComesFrom, setImgComesFrom] = useState('left')
+    const [images, setImages] = useState(null)
+    const isMountedRef = articleService.useIsMountedRef()
 
     useEffect(() => {
         const urls = []
         let index = 0
-        imagesRef.map(image => image.getDownloadURL().then(url => {
-            const img = {
-                id: index,
-                url
-            }
-            urls.push(img)
-            if(index === 0){
-                setSelectedImg(img)
-            }
-            index++
-        }))
-        setImages(urls)
-    }, [imagesRef])
-
-    const goRight = () => {
-        setImgComesFrom('right')
-        const pictureIndex = images.map(img => img.id).indexOf(selectedImg.id) +1
-        if(images[pictureIndex]){
-            setSelectedImg(images[pictureIndex])
-        } else {
-            setSelectedImg(images[0])
+        if(isMountedRef.current){
+            imagesRef.forEach(image => image.getDownloadURL().then(url => {
+                const img = {
+                    id: index,
+                    url
+                }
+                urls.push(img)
+                index++
+                if(index === imagesRef.length){
+                    setImages(urls)
+                }
+            }))
         }
-    }
-    const goLeft = () => {
-        setImgComesFrom('left')
-        const pictureIndex = images.map(img => img.id).indexOf(selectedImg.id) -1
-        if(images[pictureIndex]){
-            setSelectedImg(images[pictureIndex])
-        } else {
-            setSelectedImg(images[images.length-1])
-        }
-    }
+    }, [imagesRef, isMountedRef])
 
     return(
         <section className='carousel'>
-            <span className="carousel-left" onClick={goLeft}>&lt;</span>
-            <span className="carousel-right" onClick={goRight}>&gt;</span>
-            <ReactCSSTransitionGroup
-                transitionName={imgComesFrom}
-                transitionEnterTimeout={1000}
-                transitionLeaveTimeout={1000}>
-
-                <img key={selectedImg ? selectedImg.id : null} src={selectedImg ? selectedImg.url : Placeholder} alt={'carousel'}/>
-            </ReactCSSTransitionGroup>
-           
+            {images ? <ModalSlider slides={images} height="50vh" displaySize="cover"/> : <div></div>}
         </section>
     )
 }
