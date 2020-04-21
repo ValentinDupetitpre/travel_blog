@@ -1,14 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, lazy, Suspense} from 'react'
 
 import './Article.css'
 import articleService from '../services/articles'
+import sharedService from '../services/shared'
 import Comments from './Comments'
-import Map from './Map'
 
 import ModalWrapper from './slider/ModalWrapper'
 
+const Map = lazy(() => import('./Map'))
+
 const Article = (props) => {
-    const isMountedRef = articleService.useIsMountedRef()
+    const isMountedRef = sharedService.useIsMountedRef()
     const id = props.match.params.articleId
     const article = articleService.useArticle(id)
     const [bottomPics, setBottomPics] = useState([])
@@ -67,8 +69,10 @@ const Article = (props) => {
     }
 
     const displayBottomPictures = () => {
-        return bottomPics.map(pic => 
-            <img className="bottom-pic" key={pic.name} src={pic.url} alt={pic.name} onClick={() => handlePicClick(pic.id)}/>
+        return bottomPics.map((pic, index) => 
+            <Suspense key={index} fallback={<div>Chargement...</div>}>
+                <img className="bottom-pic" key={index} src={pic.url} alt={pic.name} onClick={() => handlePicClick(pic.id)}/>
+            </Suspense>
         )
     }
     
@@ -107,7 +111,9 @@ const Article = (props) => {
                 <ModalWrapper open={openModal} slides={bottomPics} startIndex={indexForModal} close={closeModal}/>
                 </React.Fragment>
             }
-            <Map articleId={id}/>
+            <Suspense fallback={<div>Chargement...</div>}>
+                <Map articleId={id}/>
+            </Suspense>
             <Comments articleId={id}/>
         </div>
     )

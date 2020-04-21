@@ -1,13 +1,16 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, lazy, Suspense} from 'react'
 import useCarousel from '../services/carousel.js'
-import articleService from '../services/articles'
+import sharedService from '../services/shared'
 import './Carousel.css'
-import ModalSlider from './slider/ModalSlider'
+import Placeholder from '../media/placeholder.png'
+// import ModalSlider from './slider/ModalSlider'
+
+const ModalSlider = lazy(()=> import('./slider/ModalSlider'))
 
 const Carousel = () => {
     const imagesRef = useCarousel()
     const [images, setImages] = useState(null)
-    const isMountedRef = articleService.useIsMountedRef()
+    const isMountedRef = sharedService.useIsMountedRef()
 
     useEffect(() => {
         const urls = []
@@ -29,7 +32,9 @@ const Carousel = () => {
 
     return(
         <section className='carousel'>
-            {images ? <ModalSlider slides={images} height="50vh" displaySize="cover"/> : <div></div>}
+            <Suspense fallback={<img alt="blog voyage Nouvelle-Zélande" src={Placeholder}/>}>
+                {images ? <ModalSlider slides={images} height="50vh" displaySize="cover"/> : <div></div>}
+            </Suspense>
         </section>
     )
 }

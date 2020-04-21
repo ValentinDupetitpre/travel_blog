@@ -40,7 +40,7 @@ const Map = (props) => {
                 height: 400,
                 width: 100,
                 style: 'mapbox://styles/mapbox/streets-v11',
-                center: points && points.length === 1 ? [points[0].longitude, points[0].latitude] : [0, 0],
+                center: points && points.length > 0 ? [points[0].longitude, points[0].latitude] : [0, 0],
                 zoom: 11
               })
 
@@ -112,7 +112,7 @@ const Map = (props) => {
     })
 
   return (
-    <div className="map" ref={mapContainer} />
+      points ? <div className="map" ref={mapContainer} /> : <div></div>
   )
 }
 

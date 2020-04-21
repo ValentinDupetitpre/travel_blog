@@ -1,19 +1,6 @@
-import {useState, useEffect, useRef} from 'react'
+import {useState, useEffect} from 'react'
 import firebase, {storage} from '../config/firebase'
-
-const useIsMountedRef = () => {
-    const isMountedRef = useRef(null);
-    useEffect(() => {
-      isMountedRef.current = true;
-      return () => isMountedRef.current = false;
-    });
-    return isMountedRef;
-  }
-
-const dateFromSec = (timestamp) => {
-    const date = new Date(parseInt(timestamp.seconds*1000, 10))
-    return date.toLocaleDateString()
-}
+import sharedService from './shared'
 
 const useArticles = () => {
     const [articlesPreview, setArticlesPreview] = useState([])
@@ -28,7 +15,7 @@ const useArticles = () => {
                 if(!unmounted){
                     const articles = snapshot.docs.map(doc => ({
                         id: doc.id,
-                        created: dateFromSec(doc.data().created),
+                        created: sharedService.dateFromSec(doc.data().created),
                         title: doc.data().title,
                         content: doc.data().content
                     }))
@@ -45,7 +32,7 @@ const useArticles = () => {
 
 const useArticle = (id) => {
     const [article, setArticle] = useState({})
-    const isMountedRef = useIsMountedRef()
+    const isMountedRef = sharedService.useIsMountedRef()
 
     useEffect(() => {
         const connection = firebase
@@ -68,7 +55,7 @@ const useArticle = (id) => {
 
 const useTopPicture = (ref, position) => {
     const [picture, setPicture] = useState({})
-    const isMountedRef = useIsMountedRef()
+    const isMountedRef = sharedService.useIsMountedRef()
 
     useEffect(() => {
         const picRef = storage.ref().child(`article/${ref}/${position}`)
@@ -88,7 +75,7 @@ const useTopPicture = (ref, position) => {
 
 const useBottomPics = (ref) => {
     const [pics, setPics] = useState([])
-    const isMountedRef = useIsMountedRef()
+    const isMountedRef = sharedService.useIsMountedRef()
 
     useEffect(() => {
         const picRefs = storage.ref().child(`article/${ref}/bottom`)
@@ -118,7 +105,7 @@ const useComments = (articleId) => {
             .onSnapshot((snapshot) => {
                 const comms = snapshot.docs.map(doc => ({
                     id: doc.id,
-                    created: dateFromSec(doc.data().created),
+                    created: sharedService.dateFromSec(doc.data().created),
                     name: doc.data().name,
                     comment: doc.data().comment
                 }))
@@ -150,4 +137,4 @@ const useMapPoints = (articleId) => {
     return points
 }
 
-export default {useArticles, useArticle, useTopPicture, useBottomPics, useComments, useMapPoints, useIsMountedRef}
+export default {useArticles, useArticle, useTopPicture, useBottomPics, useComments, useMapPoints}

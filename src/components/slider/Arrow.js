@@ -1,7 +1,10 @@
 /** @jsx jsx */
 import { css, jsx } from '@emotion/core'
 
-const Arrow = ({ direction, handleClick }) => (
+const Arrow = ({ direction, handleClick }) => {
+  const width = window.innerWidth
+  
+  return(
   <div
     onClick={handleClick}
     css={css`
@@ -9,8 +12,8 @@ const Arrow = ({ direction, handleClick }) => (
       position: absolute;
       top: 50%;
       ${direction === 'right' ? `right: 25px` : `left: 25px`};
-      height: 50px;
-      width: 50px;
+      height: ${width < 600 ? `30px` : `50px`};
+      width: ${width < 600 ? `30px` : `50px`};
       justify-content: center;
       background: white;
       border-radius: 50%;
@@ -23,9 +26,9 @@ const Arrow = ({ direction, handleClick }) => (
       span {
         transform: translateX(${direction === 'left' ? '-2' : '2'}px);
         color: grey;
-        font-size: 40px;
+        font-size: ${width < 600 ? `30px` : `40px`};
         font-weight: bold;
-        margin-bottom: 2px;
+        margin-bottom: ${width < 600 ? `0px` : `2px`};
         &:focus {
           outline: 0;
         }
@@ -34,6 +37,6 @@ const Arrow = ({ direction, handleClick }) => (
   >
     {direction === 'right' ? <span>&gt;</span> :  <span>&lt;</span>}
   </div>
-)
+)}
 
 export default Arrow

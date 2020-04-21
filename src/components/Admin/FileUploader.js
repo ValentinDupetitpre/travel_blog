@@ -51,12 +51,6 @@ function FileUploader(props) {
         setImageSrc(file)
       
         setLoaded(true)
-      
-        // reader.onload = (e) => {
-        //     setImageSrc(e.target.result)
-        //     setLoaded(true)
-        // }
-        // reader.readAsDataURL(file);
 
     }
 
