@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import FileUploader from './FileUploader'
+import Compress from 'compress.js'
 
 import firebase, { storage } from '../../config/firebase'
 
@@ -11,13 +12,36 @@ const CreateArticle = () => {
     const [leftPicture, setLeftPicture] = useState('')
     const [rightPicture, setRightPicture] = useState('')
     const [sidePicture, setSidePicture] = useState('')
+    const compress = new Compress
+
+    const compressImage = (img, imgRef, imgName) => {
+        compress.compress([img], {
+            size: 4, // the max size in MB, defaults to 2MB
+            quality: 0.75, // the quality of the image, max is 1,
+            maxWidth: 600, // the max width of the output image, defaults to 1920px
+            maxHeight: 800, // the max height of the output image, defaults to 1920px
+            resize: true, // defaults to true, set false if you do not want to resize the image width and height
+          }).then((results) => {
+            const img1 = results[0]
+            const base64str = img1.data
+            const imgExt = img1.ext
+            const file = Compress.convertBase64ToFile(base64str, imgExt)
+                console.log(file)
+                upload(file, imgRef, imgName)
+            // returns an array of compressed images
+          })
+    }
 
     const uploadImages = (ref) => {
-        const uploadMainPic = storage.ref(`article/${ref.id}/main`).put(mainPicture, {name:'main'})
-        const uploadLeftPic = storage.ref(`article/${ref.id}/left`).put(leftPicture, {name:'left'})
-        const uploadRightPic = storage.ref(`article/${ref.id}/right`).put(rightPicture, {name:'right'})
-        const uploadSidePic = storage.ref(`article/${ref.id}/side`).put(sidePicture, {name:'side'})
-        uploadMainPic.on(
+        compressImage(mainPicture, ref, 'main')
+        compressImage(leftPicture, ref, 'left')
+        compressImage(rightPicture, ref, 'right')
+        compressImage(sidePicture, ref, 'side')
+    }
+
+    const upload = (img, ref, imgName) => {
+        const uploadRef = storage.ref(`article/${ref.id}/${imgName}`).put(img, {name:`${imgName}`})
+        uploadRef.on(
             'state_changed',
             snapshot => {
                 console.log(snapshot)
@@ -26,43 +50,23 @@ const CreateArticle = () => {
                 console.log(error)
             },
             () => {
-                setMainPicture('')
-            }
-        )
-        uploadLeftPic.on(
-            'state_changed',
-            snapshot => {
-                console.log(snapshot)
-            },
-            error => {
-                console.log(error)
-            },
-            () => {
-                setLeftPicture('')
-            }
-        )
-        uploadRightPic.on(
-            'state_changed',
-            snapshot => {
-                console.log(snapshot)
-            },
-            error => {
-                console.log(error)
-            },
-            () => {
-                setRightPicture('')
-            }
-        )
-        uploadSidePic.on(
-            'state_changed',
-            snapshot => {
-                console.log(snapshot)
-            },
-            error => {
-                console.log(error)
-            },
-            () => {
-                setSidePicture('')
+                switch (imgName) {
+                    case 'main':
+                        setMainPicture('')
+                        break;
+                    case 'left':
+                        setLeftPicture('')
+                        break;
+                    case 'right':
+                        setRightPicture('')
+                        break;
+                    case 'side':
+                        setSidePicture('')
+                        break;
+                
+                    default:
+                        break;
+                }
             }
         )
     }

@@ -36,8 +36,8 @@ const UpdateArticleMainsPics = () => {
         compress.compress([picture], {
             size: 4, // the max size in MB, defaults to 2MB
             quality: 0.75, // the quality of the image, max is 1,
-            maxWidth: 1200, // the max width of the output image, defaults to 1920px
-            maxHeight: 1000, // the max height of the output image, defaults to 1920px
+            maxWidth: 600, // the max width of the output image, defaults to 1920px
+            maxHeight: 800, // the max height of the output image, defaults to 1920px
             resize: true, // defaults to true, set false if you do not want to resize the image width and height
           }).then((results) => {
             const img1 = results[0]
