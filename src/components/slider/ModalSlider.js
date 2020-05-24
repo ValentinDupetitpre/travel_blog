@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 import ModalSliderContent from './ModalSliderContent'
 import ModalSlide from './ModalSlide'
 import Arrow from './Arrow'
@@ -8,6 +8,7 @@ import { css, jsx } from '@emotion/core'
 
 const ModalSlider = (props) => {
     const getWidth = () => window.innerWidth
+    const isDesktop = getWidth() > 600
     const [state, setState] = useState({
         activeIndex: 0,
         translate: 0,
@@ -43,7 +44,7 @@ const ModalSlider = (props) => {
         }
     }
 
-    const nextSlide = () => {
+    const nextSlide = useCallback(() => {
         if (activeIndex === props.slides.length - 1) {
           return setState({
             ...state,
@@ -57,9 +58,9 @@ const ModalSlider = (props) => {
           activeIndex: activeIndex + 1,
           translate: (activeIndex + 1) * getWidth()
         })
-    }
+    }, [activeIndex, props.slides.length, state])
 
-    const prevSlide = () => {
+    const prevSlide = useCallback(() => {
         if (activeIndex === 0) {
           return setState({
             ...state,
@@ -73,7 +74,16 @@ const ModalSlider = (props) => {
           activeIndex: activeIndex - 1,
           translate: (activeIndex - 1) * getWidth()
         })
-    }
+    }, [activeIndex, props.slides.length, state])
+
+    useEffect(()=>{
+        if(isDesktop){
+            const timer = setTimeout(() => {
+               nextSlide() 
+            }, 5000)
+            return () => clearTimeout(timer)
+        }
+    }, [nextSlide, prevSlide])
 
     return (
         <div css={css`

@@ -33,7 +33,7 @@ const Carousel = () => {
     return(
         <section className='carousel'>
             <Suspense fallback={<img alt="blog voyage Nouvelle-Zélande" src={Placeholder}/>}>
-                {images ? <ModalSlider slides={images} height="50vh" displaySize="cover"/> : <div></div>}
+                {images ? <ModalSlider slides={images} height="50vh" displaySize="cover"/> : <div className="carousel-loading">Chargement du Carousel...</div>}
             </Suspense>
         </section>
     )

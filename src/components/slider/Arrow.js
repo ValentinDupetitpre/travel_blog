@@ -15,18 +15,20 @@ const Arrow = ({ direction, handleClick }) => {
       height: ${width < 600 ? `30px` : `50px`};
       width: ${width < 600 ? `30px` : `50px`};
       justify-content: center;
-      background: white;
-      border-radius: 50%;
       cursor: pointer;
-      align-items: flex-end;
-      transition: transform ease-in 0.1s;
-      &:hover {
-        transform: scale(1.1);
+      ${width > 600 ? 
+        `background: white;
+        border-radius: 50%;
+        align-items: flex-end;
+        transition: transform ease-in 0.1s;
+        &:hover {
+          transform: scale(1.1);
+        }`:``
       }
       span {
         transform: translateX(${direction === 'left' ? '-2' : '2'}px);
-        color: grey;
-        font-size: ${width < 600 ? `30px` : `40px`};
+        color: ${width < 600 ? `white` : `grey`};
+        font-size: 40px;
         font-weight: bold;
         margin-bottom: ${width < 600 ? `0px` : `2px`};
         &:focus {

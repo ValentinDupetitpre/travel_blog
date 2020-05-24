@@ -19,6 +19,19 @@
     z-index: 0;
 }
 
+.carousel-loading{
+    display: flex;
+    height: 50vh;
+    width: 100%;
+    background-color: #bbb;
+    align-items: center;
+    justify-content: center;
+    font-family: Kalam;
+    background: #bbb;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom,#f2f2f2, #bbb);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #f2f2f2, #bbb); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
 .carousel .carousel-left {
     position: absolute;
     top: 40%;

@@ -29,7 +29,7 @@ const Home = () => {
             </div>
           </div>
         </section>
-        <div className="general-info">
+        {false && <div className="general-info">
           <h3>Informations générales : nous indiquerons ici notre situation de vie quotidienne</h3>
           <p>Aujourd'hui lundi 23 Mars 2020 à 13h30, Jacinda Ardern, première ministre Néo-Zélandaise a indiqué un passage au niveau d'alerte 3 immédiatement et un passage au niveau 4 (sur 4) dans les 48h. 
             Cela veut dire que nous devons nous confiner totalement ici et que seuls les commerces nécessaires resteront ouvert. Ils resteront ravitaillés tout le long du confinement. Nous avons trouvé en dernière
@@ -40,7 +40,7 @@ const Home = () => {
           </p>
           <p>Si vous voulez davantage d'informations n'hésitez pas à nous écrire ;)
           </p>
-        </div>
+        </div>}
         <Preview />
     </div>
   )

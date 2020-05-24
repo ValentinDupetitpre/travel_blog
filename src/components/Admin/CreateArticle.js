@@ -12,7 +12,7 @@ const CreateArticle = () => {
     const [leftPicture, setLeftPicture] = useState('')
     const [rightPicture, setRightPicture] = useState('')
     const [sidePicture, setSidePicture] = useState('')
-    const compress = new Compress
+    const compress = new Compress()
 
     const compressImage = (img, imgRef, imgName) => {
         compress.compress([img], {
